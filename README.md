@@ -20,7 +20,14 @@ A Git extension for versioning large files with Arweave storage, similar to Git 
 - Node.js >= 20.0.0
 - npm or yarn
 
-### Install from source
+### Install from npm
+
+```bash
+# Install the CLI globally from npm
+npm install -g git-arweave-lfs
+```
+
+### Install from source (contributor setup)
 
 ```bash
 # Clone the repository
@@ -33,15 +40,15 @@ npm install
 # Build the project
 npm run build
 
-# Install globally for CLI access
-npm install -g .
+# Link the CLI locally for development
+npm link
 ```
 
 ## Quick Start
 
 1. **Install globally:**
    ```bash
-   npm install -g .
+   npm install -g git-arweave-lfs
    ```
 
 2. **Install Git Arweave LFS filters globally (one-time setup):**
