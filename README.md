@@ -54,19 +54,24 @@ npm install -g .
    git arweave-lfs config set-wallet /path/to/your/arweave-wallet.json
    ```
 
-4. **In any Git repository, track large files:**
+4. **(Optional) Configure a custom download gateway:**
+   ```bash
+   git arweave-lfs config set-gateway https://ar-io.net
+   ```
+
+5. **In any Git repository, track large files:**
    ```bash
    cd your-git-repo
    git arweave-lfs track "*.psd" "*.zip" "*.mp4"
    ```
 
-5. **Add and commit (files are automatically uploaded to Arweave):**
+6. **Add and commit (files are automatically uploaded to Arweave):**
    ```bash
    git add .
    git commit -m "Add large files"
    ```
 
-6. **Clone and restore files (works without wallet setup):**
+7. **Clone and restore files (works without wallet setup):**
    ```bash
    git clone your-repo.git  # Files download automatically from Arweave
    cd your-repo
@@ -102,6 +107,9 @@ git arweave-lfs config set-wallet /path/to/your/arweave-wallet.json
 
 # Or set globally for all repositories
 git config --global arweave-lfs.wallet /path/to/your/arweave-wallet.json
+
+# Configure download gateway (defaults to https://arweave.net)
+git arweave-lfs config set-gateway https://ar.io
 
 # View current configuration
 git arweave-lfs config show
@@ -189,6 +197,9 @@ git arweave-lfs config show
 
 # Set wallet path
 git arweave-lfs config set-wallet /path/to/wallet.json
+
+# Set custom download gateway (defaults to https://arweave.net)
+git arweave-lfs config set-gateway https://ar.io
 
 # Check your Turbo balance (requires wallet)
 git arweave-lfs balance

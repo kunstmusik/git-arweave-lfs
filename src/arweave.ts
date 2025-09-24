@@ -1,5 +1,6 @@
 import Arweave from 'arweave';
 import { ArweaveSigner, TurboFactory } from '@ardrive/turbo-sdk';
+import type { TurboUploadEventsAndPayloads } from '@ardrive/turbo-sdk';
 import { readFileSync, writeFileSync, mkdirSync, statSync, existsSync } from 'fs';
 import { dirname, join } from 'path';
 import { createHash } from 'crypto';
@@ -20,22 +21,29 @@ export class ArweaveManager {
   private turboClient: any;
   private referencesFile: string;
   private fileReferences: Map<string, FileReference>;
+  private gatewayUrl: string;
 
-  private constructor(config: GitArweaveConfig, gitDir: string) {
+  private constructor(config: GitArweaveConfig, gitDir: string, gatewayUrl: string) {
     this.config = config;
     this.referencesFile = join(gitDir, 'arweave-lfs', 'references.json');
     this.fileReferences = this.loadReferences();
+    this.gatewayUrl = gatewayUrl.replace(/\/$/, '');
 
     // Initialize Arweave instance (for downloads and compatibility)
+    const gateway = new URL(this.gatewayUrl.startsWith('http') ? this.gatewayUrl : `https://${this.gatewayUrl}`);
+    const protocol = gateway.protocol.replace(':', '') || 'https';
+    const port = gateway.port ? Number.parseInt(gateway.port, 10) : protocol === 'https' ? 443 : 80;
+
     this.arweave = Arweave.init({
-      host: 'arweave.net',
-      port: 443,
-      protocol: 'https'
+      host: gateway.hostname,
+      port,
+      protocol
     });
   }
 
   public static async create(config: GitArweaveConfig, gitDir: string): Promise<ArweaveManager> {
-    const manager = new ArweaveManager(config, gitDir);
+    const turboConfig = await config.getTurboConfig();
+    const manager = new ArweaveManager(config, gitDir, turboConfig.gatewayUrl);
     return manager;
   }
 
@@ -107,6 +115,7 @@ export class ArweaveManager {
       }
 
       console.error(`📤 Uploading ${filePath} to Arweave via Turbo...`);
+      let lastLoggedPercent = -10;
 
       // Upload the file using Turbo
       const result = await this.turboClient.uploadFile({
@@ -118,6 +127,22 @@ export class ArweaveManager {
             { name: 'App-Name', value: 'git-arweave-lfs' },
             { name: 'file-hash', value: fileHash },
           ]
+        },
+        events: {
+          onUploadProgress: ({ totalBytes, processedBytes }: TurboUploadEventsAndPayloads['upload-progress']) => {
+            if (!totalBytes) {
+              console.error(`   ↪ Uploaded ${processedBytes} bytes...`);
+              return;
+            }
+
+            const percent = Math.floor((processedBytes / totalBytes) * 100);
+            if (percent - lastLoggedPercent >= 10 || percent === 100) {
+              const humanProcessed = this.formatBytes(processedBytes);
+              const humanTotal = this.formatBytes(totalBytes);
+              console.error(`   ↪ Upload progress: ${percent}% (${humanProcessed} / ${humanTotal})`);
+              lastLoggedPercent = percent;
+            }
+          }
         }
       });
 
@@ -154,7 +179,7 @@ export class ArweaveManager {
       console.error(`📥 Downloading ${txId} to ${outputPath}...`);
 
       // Download from Arweave gateway
-      const response = await fetch(`https://arweave.net/${txId}`);
+      const response = await fetch(this.buildGatewayUrl(txId));
       if (!response.ok) {
         throw new Error(`Failed to download from Arweave: ${response.status} ${response.statusText}`);
       }
@@ -254,5 +279,21 @@ export class ArweaveManager {
       totalFiles: this.fileReferences.size,
       totalSize
     };
+  }
+
+  private buildGatewayUrl(txId: string): string {
+    const base = this.gatewayUrl.endsWith('/') ? this.gatewayUrl : `${this.gatewayUrl}/`;
+    return `${base}${txId}`;
+  }
+
+  private formatBytes(bytes: number): string {
+    if (bytes === 0) {
+      return '0 B';
+    }
+
+    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    const exponent = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+    const value = bytes / Math.pow(1024, exponent);
+    return `${value.toFixed(1)} ${units[exponent]}`;
   }
 }

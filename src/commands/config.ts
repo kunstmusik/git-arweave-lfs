@@ -27,13 +27,33 @@ export const configCommand = async (action: string, value?: string): Promise<voi
         await config.setWalletPath(value);
         break;
 
+      case 'set-gateway':
+        if (!value) {
+          console.error('❌ Error: Gateway URL is required');
+          console.error('Usage: git arweave-lfs config set-gateway <url>');
+          process.exit(1);
+        }
+
+        try {
+          const parsed = new URL(value);
+          if (!parsed.protocol || !parsed.hostname) {
+            throw new Error('Invalid URL');
+          }
+        } catch (error) {
+          console.error(`❌ Error: Invalid gateway URL: ${value}`);
+          process.exit(1);
+        }
+
+        await config.setGatewayUrl(value);
+        break;
+
       case 'show':
         await config.showConfig();
         break;
 
       default:
         console.error(`❌ Unknown config action: ${action}`);
-        console.error('Available actions: set-wallet, show');
+        console.error('Available actions: set-wallet, set-gateway, show');
         process.exit(1);
     }
   } catch (error) {

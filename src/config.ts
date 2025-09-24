@@ -3,7 +3,10 @@ import simpleGit from 'simple-git';
 
 export interface TurboConfig {
   walletPath?: string;
+  gatewayUrl: string;
 }
+
+const DEFAULT_GATEWAY = 'https://arweave.net';
 
 export class GitArweaveConfig {
   private git: any;
@@ -14,7 +17,8 @@ export class GitArweaveConfig {
 
   public async getTurboConfig(): Promise<TurboConfig> {
     return {
-      walletPath: await this.getWalletPath()
+      walletPath: await this.getWalletPath(),
+      gatewayUrl: await this.getGatewayUrl() ?? DEFAULT_GATEWAY
     };
   }
 
@@ -42,6 +46,24 @@ export class GitArweaveConfig {
     return undefined;
   }
 
+  private async getGatewayUrl(): Promise<string | undefined> {
+    try {
+      const gitConfig = await this.git.getConfig('arweave-lfs.gateway');
+      if (gitConfig && gitConfig.value) {
+        return gitConfig.value;
+      }
+    } catch (error) {
+      // Ignore missing config
+    }
+
+    const envGateway = process.env.ARWEAVE_LFS_GATEWAY;
+    if (envGateway) {
+      return envGateway;
+    }
+
+    return undefined;
+  }
+
   public async setWalletPath(walletPath: string): Promise<void> {
     try {
       // Store in git config
@@ -49,6 +71,16 @@ export class GitArweaveConfig {
       console.log(`✅ Wallet path set to: ${walletPath}`);
     } catch (error) {
       console.error('Failed to set wallet path in git config:', error);
+      throw error;
+    }
+  }
+
+  public async setGatewayUrl(gatewayUrl: string): Promise<void> {
+    try {
+      await this.git.addConfig('arweave-lfs.gateway', gatewayUrl);
+      console.log(`✅ Download gateway set to: ${gatewayUrl}`);
+    } catch (error) {
+      console.error('Failed to set gateway in git config:', error);
       throw error;
     }
   }
@@ -80,8 +112,17 @@ export class GitArweaveConfig {
         console.log('📁 Wallet Path: Not set');
         console.log('💡 Use "git arweave-lfs config set-wallet <path>" to set it');
       }
+
+      const gatewayConfig = gitConfig.all['arweave-lfs.gateway'];
+      if (gatewayConfig) {
+        console.log(`🌐 Download Gateway: ${gatewayConfig}`);
+      } else {
+        console.log(`🌐 Download Gateway: ${DEFAULT_GATEWAY} (default)`);
+        console.log('💡 Use "git arweave-lfs config set-gateway <url>" to change it');
+      }
     } catch (error) {
       console.log('📁 Wallet Path: Not accessible');
+      console.log(`🌐 Download Gateway: ${DEFAULT_GATEWAY} (default)`);
     }
   }
 }

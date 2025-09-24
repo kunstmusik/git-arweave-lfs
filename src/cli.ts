@@ -45,6 +45,14 @@ program
       })
   )
   .addCommand(
+    new Command('set-gateway')
+      .description('Set the Arweave gateway URL used for downloads')
+      .argument('<url>', 'gateway URL, e.g. https://arweave.net')
+      .action(async (url) => {
+        await configCommand('set-gateway', url);
+      })
+  )
+  .addCommand(
     new Command('show')
       .description('Show current configuration')
       .action(async () => {
