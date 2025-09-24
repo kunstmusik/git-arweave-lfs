@@ -24,11 +24,14 @@
   "license": "MIT",
   "dependencies": {
     "@ardrive/turbo-sdk": "1.31.1",
+    "@inquirer/prompts": "^7.8.6",
+    "@types/open": "^6.1.0",
     "arweave": "^1.14.4",
     "commander": "^11.0.0",
     "fs-extra": "^11.0.0",
     "mime-types": "^2.1.35",
     "node": "^20.0.0",
+    "open": "^10.2.0",
     "path": "^0.12.7",
     "simple-git": "^3.20.0",
     "ts-node": "^10.9.2"

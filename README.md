@@ -179,12 +179,24 @@ git arweave-lfs uninstall
 
 # Track file patterns in any repository
 git arweave-lfs track "*.zip" "*.psd" "*.mp4"
+```
 
-# Show configuration
+### Wallet Management
+
+```bash
+# Show current wallet configuration
 git arweave-lfs config show
 
 # Set wallet path
 git arweave-lfs config set-wallet /path/to/wallet.json
+
+# Check your Turbo balance (requires wallet)
+git arweave-lfs balance
+# Example output: 💰 Turbo Balance: 930123194433.000000 credits ($930123.194433 USD)
+
+# Top up your Turbo balance (opens browser for payment)
+git arweave-lfs topup
+# Follow the prompts to enter the amount in USD
 ```
 
 ### Git Integration Commands (used internally)

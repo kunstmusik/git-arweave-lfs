@@ -7,6 +7,7 @@ import { cleanFilter } from './filters/clean';
 import { smudgeFilter } from './filters/smudge';
 import { diffDriver } from './drivers/diff';
 import { configCommand } from './commands/config';
+import { checkBalance, topupWallet } from './commands/wallet';
 
 const program = new Command();
 
@@ -50,6 +51,21 @@ program
         await configCommand('show');
       })
   );
+
+// Wallet commands
+program
+  .command('balance')
+  .description('Check your Turbo balance')
+  .action(async () => {
+    await checkBalance(process.cwd());
+  });
+
+program
+  .command('topup')
+  .description('Add funds to your Turbo account')
+  .action(async () => {
+    await topupWallet(process.cwd());
+  });
 
 // Git filters and drivers
 program
