@@ -20,6 +20,10 @@
     "large-files",
     "version-control"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kunstmusik/git-arweave-lfs.git"
+  },
   "author": "Steven Yi <stevenyi@gmail.com>",
   "license": "MIT",
   "dependencies": {

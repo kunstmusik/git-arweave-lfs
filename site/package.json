@@ -1,0 +1,14 @@
+{
+  "name": "git-arweave-lfs-site",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Marketing site for git-arweave-lfs",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve --watch",
+    "clean": "rm -rf _site"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}

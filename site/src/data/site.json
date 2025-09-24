@@ -1,0 +1,6 @@
+{
+  "title": "git-arweave-lfs",
+  "description": "Git LFS-compatible large file storage backed by Arweave.",
+  "repoUrl": "https://github.com/kunstmusik/git-arweave-lfs",
+  "docsUrl": "https://github.com/kunstmusik/git-arweave-lfs#readme"
+}

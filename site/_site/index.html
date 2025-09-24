@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>git-arweave-lfs · Arweave-backed Git LFS</title>
+    <meta name="description" content="A Git LFS-compatible extension that stores large files permanently on Arweave with wallet-free clones and fast uploads." />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/inter" />
+  </head>
+  <body>
+    <header>
+      <a href="/" aria-label="git-arweave-lfs home">
+        <strong>git-arweave-lfs</strong>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#quickstart">Quickstart</a></li>
+          <li><a href="https://github.com/kunstmusik/git-arweave-lfs" rel="noopener" target="_blank">GitHub</a></li>
+          <li><a href="https://github.com/kunstmusik/git-arweave-lfs#readme" rel="noopener" target="_blank">Docs</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      
+<section class="hero">
+  <div>
+    <h1>Permanent large-file storage for Git teams</h1>
+    <p>
+      git-arweave-lfs brings Git LFS workflows to the decentralized web. Track, push,
+      and clone large assets backed by Arweave&apos;s permanent storage without changing
+      the way your team works.
+    </p>
+    <div class="cta-group">
+      <a class="button primary" href="https://github.com/kunstmusik/git-arweave-lfs" target="_blank" rel="noopener">
+        View on GitHub
+      </a>
+      <a class="button secondary" href="#quickstart">
+        Get Started
+      </a>
+    </div>
+  </div>
+  <div>
+    <div class="code-block" aria-label="Sample workflow">
+      <pre><code>git arweave-lfs install
+git arweave-lfs config set-wallet ~/wallet.json
+
+git arweave-lfs track "*.zip"
+git add build/archive.zip
+git commit -m "Store build artifacts permanently"</code></pre>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="section">
+  <h2>Why teams choose git-arweave-lfs</h2>
+  <p>
+    Built to feel like Git LFS, with the added benefit of Arweave&apos;s tamper-proof,
+    permanent storage and Turbo-backed uploads.
+  </p>
+  <div class="features">
+    
+      <article class="feature-card">
+        <h3>Git LFS-compatible workflow</h3>
+        <p>Install once, track patterns, and push large files with the same commands you already use in Git LFS.</p>
+      </article>
+    
+      <article class="feature-card">
+        <h3>Permanent Arweave storage</h3>
+        <p>Back large assets with Arweave&#39;s permanent, decentralized data layer—no more expired links or missing binaries.</p>
+      </article>
+    
+      <article class="feature-card">
+        <h3>Wallet-free clones</h3>
+        <p>Developers can clone and pull repositories without configuring a wallet, removing onboarding friction.</p>
+      </article>
+    
+      <article class="feature-card">
+        <h3>Efficient uploads via ArDrive Turbo</h3>
+        <p>Upload files quickly and reliably with Turbo acceleration while preserving verifiability on-chain.</p>
+      </article>
+    
+      <article class="feature-card">
+        <h3>Granular deduplication</h3>
+        <p>Pointer files mirror Git LFS, avoiding redundant uploads and keeping repositories lean.</p>
+      </article>
+    
+      <article class="feature-card">
+        <h3>First-class CLI tooling</h3>
+        <p>Track patterns, configure wallets, and manage filters using intuitive `git arweave-lfs` subcommands.</p>
+      </article>
+    
+  </div>
+</section>
+
+<section id="quickstart" class="section">
+  <h2>Install in minutes</h2>
+  <p>
+    git-arweave-lfs installs globally, then works in any repository you clone.
+  </p>
+  <div class="code-block">
+    <pre><code># One-time setup
+git arweave-lfs install
+git arweave-lfs config set-wallet /path/to/wallet.json
+
+# Track files in any repo
+git arweave-lfs track "*.zip"
+git add large-file.zip
+
+# Clone and pull without a wallet
+git clone https://github.com/you/repo.git</code></pre>
+  </div>
+</section>
+
+<section class="section">
+  <h2>How it works</h2>
+  <p>
+    Pointer files keep your Git history lean, while the clean/smudge filters interact
+    with Arweave. Uploads leverage ArDrive Turbo for speed, and downloads use the
+    public gateway so developers can clone without a wallet. References are stored
+    in `repository/.git/info/arweave-lfs-refs.json` to avoid duplicate uploads.
+  </p>
+</section>
+
+<section class="section">
+  <h2>Ready for production</h2>
+  <p>
+    The CLI mirrors Git LFS, uses native Git configuration, and offers wallet-free
+    read-only operations. It&apos;s optimized for DX with descriptive errors, smart
+    caching, and deterministic builds.
+  </p>
+  <div class="cta-group">
+    <a class="button primary" href="https://github.com/kunstmusik/git-arweave-lfs" target="_blank" rel="noopener">
+      Explore the code
+    </a>
+    <a class="button secondary" href="https://github.com/kunstmusik/git-arweave-lfs#readme" target="_blank" rel="noopener">
+      Read the docs
+    </a>
+  </div>
+</section>
+
+    </main>
+    <footer>
+      <p>
+        Built with ❤️ by the git-arweave-lfs team. Version 0.1.0.
+        View the project on <a href="https://github.com/kunstmusik/git-arweave-lfs" rel="noopener" target="_blank">GitHub</a>.
+      </p>
+    </footer>
+  </body>
+</html>

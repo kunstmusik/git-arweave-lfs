@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title or site.title }}</title>
+    <meta name="description" content="{{ description or site.description }}" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/inter" />
+  </head>
+  <body>
+    <header>
+      <a href="/" aria-label="{{ site.title }} home">
+        <strong>{{ site.title }}</strong>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#quickstart">Quickstart</a></li>
+          <li><a href="{{ site.repoUrl }}" rel="noopener" target="_blank">GitHub</a></li>
+          <li><a href="{{ site.docsUrl }}" rel="noopener" target="_blank">Docs</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      {{ content | safe }}
+    </main>
+    <footer>
+      <p>
+        Built with ❤️ by the git-arweave-lfs team. Version {{ siteVersion }}.
+        View the project on <a href="{{ site.repoUrl }}" rel="noopener" target="_blank">GitHub</a>.
+      </p>
+    </footer>
+  </body>
+</html>

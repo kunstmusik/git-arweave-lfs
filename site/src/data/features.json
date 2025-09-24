@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Git LFS-compatible workflow",
+    "description": "Install once, track patterns, and push large files with the same commands you already use in Git LFS."
+  },
+  {
+    "title": "Permanent Arweave storage",
+    "description": "Back large assets with Arweave's permanent, decentralized data layer—no more expired links or missing binaries."
+  },
+  {
+    "title": "Wallet-free clones",
+    "description": "Developers can clone and pull repositories without configuring a wallet, removing onboarding friction."
+  },
+  {
+    "title": "Efficient uploads via ArDrive Turbo",
+    "description": "Upload files quickly and reliably with Turbo acceleration while preserving verifiability on-chain."
+  },
+  {
+    "title": "Granular deduplication",
+    "description": "Pointer files mirror Git LFS, avoiding redundant uploads and keeping repositories lean."
+  },
+  {
+    "title": "First-class CLI tooling",
+    "description": "Track patterns, configure wallets, and manage filters using intuitive `git arweave-lfs` subcommands."
+  }
+]

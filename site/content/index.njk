@@ -1,0 +1,97 @@
+---
+layout: base.njk
+title: git-arweave-lfs · Arweave-backed Git LFS
+permalink: /
+description: A Git LFS-compatible extension that stores large files permanently on Arweave with wallet-free clones and fast uploads.
+---
+
+<section class="hero">
+  <div>
+    <h1>Permanent large-file storage for Git teams</h1>
+    <p>
+      git-arweave-lfs brings Git LFS workflows to the decentralized web. Track, push,
+      and clone large assets backed by Arweave&apos;s permanent storage without changing
+      the way your team works.
+    </p>
+    <div class="cta-group">
+      <a class="button primary" href="{{ site.repoUrl }}" target="_blank" rel="noopener">
+        View on GitHub
+      </a>
+      <a class="button secondary" href="#quickstart">
+        Get Started
+      </a>
+    </div>
+  </div>
+  <div>
+    <div class="code-block" aria-label="Sample workflow">
+      <pre><code>git arweave-lfs install
+git arweave-lfs config set-wallet ~/wallet.json
+
+git arweave-lfs track "*.zip"
+git add build/archive.zip
+git commit -m "Store build artifacts permanently"</code></pre>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="section">
+  <h2>Why teams choose git-arweave-lfs</h2>
+  <p>
+    Built to feel like Git LFS, with the added benefit of Arweave&apos;s tamper-proof,
+    permanent storage and Turbo-backed uploads.
+  </p>
+  <div class="features">
+    {% for feature in features %}
+      <article class="feature-card">
+        <h3>{{ feature.title }}</h3>
+        <p>{{ feature.description }}</p>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section id="quickstart" class="section">
+  <h2>Install in minutes</h2>
+  <p>
+    git-arweave-lfs installs globally, then works in any repository you clone.
+  </p>
+  <div class="code-block">
+    <pre><code># One-time setup
+git arweave-lfs install
+git arweave-lfs config set-wallet /path/to/wallet.json
+
+# Track files in any repo
+git arweave-lfs track "*.zip"
+git add large-file.zip
+
+# Clone and pull without a wallet
+git clone https://github.com/you/repo.git</code></pre>
+  </div>
+</section>
+
+<section class="section">
+  <h2>How it works</h2>
+  <p>
+    Pointer files keep your Git history lean, while the clean/smudge filters interact
+    with Arweave. Uploads leverage ArDrive Turbo for speed, and downloads use the
+    public gateway so developers can clone without a wallet. References are stored
+    in `repository/.git/info/arweave-lfs-refs.json` to avoid duplicate uploads.
+  </p>
+</section>
+
+<section class="section">
+  <h2>Ready for production</h2>
+  <p>
+    The CLI mirrors Git LFS, uses native Git configuration, and offers wallet-free
+    read-only operations. It&apos;s optimized for DX with descriptive errors, smart
+    caching, and deterministic builds.
+  </p>
+  <div class="cta-group">
+    <a class="button primary" href="{{ site.repoUrl }}" target="_blank" rel="noopener">
+      Explore the code
+    </a>
+    <a class="button secondary" href="{{ site.docsUrl }}" target="_blank" rel="noopener">
+      Read the docs
+    </a>
+  </div>
+</section>
