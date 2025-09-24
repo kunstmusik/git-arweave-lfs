@@ -192,7 +192,7 @@ git arweave-lfs config set-wallet /path/to/wallet.json
 
 # Check your Turbo balance (requires wallet)
 git arweave-lfs balance
-# Example output: 💰 Turbo Balance: 930123194433.000000 credits ($930123.194433 USD)
+# Example output: 💰 Turbo Balance: 0.930123 credits ($5.562137 USD)
 
 # Top up your Turbo balance (opens browser for payment)
 git arweave-lfs topup
